@@ -1,0 +1,26 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: istio-stable
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: testcase
+        containerPath: /app/config
+      - hostPath: coverage-stable
+        containerPath: /app/coverage
+  - role: worker
+    extraMounts:
+      - hostPath: testcase
+        containerPath: /app/config
+      - hostPath: coverage-stable
+        containerPath: /app/coverage
+  - role: worker
+    extraMounts:
+      - hostPath: testcase
+        containerPath: /app/config
+      - hostPath: coverage-stable
+        containerPath: /app/coverage
+containerdConfigPatches:
+  - |-
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:15000"]
+      endpoint = ["http://registry:5000"]

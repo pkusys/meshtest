@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  namespace: default
+spec:
+    containers:
+    - name: debug
+      image: localhost:15000/sender
+      imagePullPolicy: Always
+      args:
+        - "sender.py"
+        - "debug"
+      volumeMounts:
+        - mountPath: /app/config
+          name: config
+    volumes:
+        - name: config
+          hostPath:
+            path: /app/config
